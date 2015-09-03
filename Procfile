@@ -1,1 +1,1 @@
-web: java -Dserver.port=$PORT $JAVA_OPTS -jar target/*.jar
+web: java -Dserver.port=$PORT $JAVA_OPTS -jar target/*.jar -Dspring.data.mongodb.uri=${MONGOLAB_URI}
