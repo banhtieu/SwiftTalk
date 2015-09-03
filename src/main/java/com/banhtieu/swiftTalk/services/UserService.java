@@ -74,7 +74,11 @@ public class UserService {
         if (currentUser == null) {
             try {
                 String userId = (String) session.getAttribute("currentUser");
-                currentUser = userRepository.findOne(userId);
+
+                if (userId != null) {
+                    currentUser = userRepository.findOne(userId);
+                }
+                
             } catch (Exception exception) {
                 currentUser = null;
             }
