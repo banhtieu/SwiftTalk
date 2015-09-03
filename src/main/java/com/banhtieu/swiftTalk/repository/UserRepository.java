@@ -1,8 +1,8 @@
-package com.banhtieu.repository;
+package com.banhtieu.swiftTalk.repository;
 
 
 import org.springframework.data.mongodb.repository.MongoRepository;
-import com.banhtieu.model.User;
+import com.banhtieu.swiftTalk.model.User;
 
 /**
  * Created by banhtieu on 9/3/15.

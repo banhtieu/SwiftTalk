@@ -1,4 +1,4 @@
-package com.banhtieu.model;
+package com.banhtieu.swiftTalk.model;
 
 import org.springframework.data.annotation.Id;
 

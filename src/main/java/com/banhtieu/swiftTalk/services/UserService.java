@@ -1,8 +1,9 @@
-package com.banhtieu.services;
+package com.banhtieu.swiftTalk.services;
 
-import com.banhtieu.model.User;
-import com.banhtieu.repository.UserRepository;
+import com.banhtieu.swiftTalk.model.User;
 import java.util.List;
+
+import com.banhtieu.swiftTalk.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,12 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class UserService {
 
-    /**
-     * The user repository
-     */
+
     @Autowired
     private UserRepository userRepository;
-
 
     /**
      * find all users in repository
