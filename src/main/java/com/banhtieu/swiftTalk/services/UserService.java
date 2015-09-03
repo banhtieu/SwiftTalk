@@ -30,7 +30,7 @@ public class UserService {
 
     /**
      * find all users in repository
-     * @return
+     * @return all user in database
      */
     @RequestMapping("/users")
     public List<User> getAllUsers() {
@@ -40,8 +40,8 @@ public class UserService {
 
     /**
      * Logged in as a user
-     * @param accessToken
-     * @return
+     * @param accessToken the access token of facebook session
+     * @return the logged in user
      */
     @RequestMapping("/user/login")
     public User login(@RequestParam String accessToken) {
@@ -54,6 +54,7 @@ public class UserService {
             user = new User();
             user.setFacebookId(profile.getId());
             user.setScreenName(profile.getName());
+            user.setAvatar(String.format("https://graph.facebook.com/%s/picture?type=large", profile.getId()));
 
             userRepository.save(user);
         }
