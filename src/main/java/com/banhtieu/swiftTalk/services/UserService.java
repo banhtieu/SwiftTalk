@@ -44,7 +44,7 @@ public class UserService {
      * @return
      */
     @RequestMapping("/user/login")
-    public boolean login(@RequestParam String accessToken) {
+    public User login(@RequestParam String accessToken) {
 
         org.springframework.social.facebook.api.User profile = getProfile(accessToken);
 
@@ -60,7 +60,7 @@ public class UserService {
 
         setCurrentUser(user);
 
-        return user != null;
+        return user;
     }
 
 
