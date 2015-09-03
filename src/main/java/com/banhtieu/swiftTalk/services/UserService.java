@@ -5,7 +5,10 @@ import java.util.List;
 
 import com.banhtieu.swiftTalk.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.social.facebook.api.Facebook;
+import org.springframework.social.facebook.api.impl.FacebookTemplate;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -28,4 +31,12 @@ public class UserService {
         return userRepository.findAll();
     }
 
+
+    @RequestMapping("/user/login")
+    public String login(@RequestParam String accessToken) {
+        Facebook facebook = new FacebookTemplate(accessToken);
+        org.springframework.social.facebook.api.User user;
+        user = facebook.userOperations().getUserProfile();
+        return user.getName();
+    }
 }
