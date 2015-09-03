@@ -24,10 +24,6 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private HttpSession session;
-    private User currentUser;
-
     /**
      * find all users in repository
      * @return all user in database
@@ -44,7 +40,7 @@ public class UserService {
      * @return the logged in user
      */
     @RequestMapping("/user/login")
-    public User login(@RequestParam String accessToken) {
+    public User login(@RequestParam String accessToken, HttpSession session) {
 
         org.springframework.social.facebook.api.User profile = getProfile(accessToken);
 
@@ -59,7 +55,7 @@ public class UserService {
             userRepository.save(user);
         }
 
-        setCurrentUser(user);
+        session.setAttribute("currentUser", user.getId());
 
         return user;
     }
@@ -70,18 +66,18 @@ public class UserService {
      * @return current logged in user
      */
     @RequestMapping("/user/me")
-    public User getCurrentUser() {
-        if (currentUser == null) {
-            try {
-                String userId = (String) session.getAttribute("currentUser");
+    public User getCurrentUser(HttpSession session) {
 
-                if (userId != null) {
-                    currentUser = userRepository.findOne(userId);
-                }
-                
-            } catch (Exception exception) {
-                currentUser = null;
+        User currentUser = null;
+        try {
+            String userId = (String) session.getAttribute("currentUser");
+
+            if (userId != null) {
+                currentUser = userRepository.findOne(userId);
             }
+
+        } catch (Exception exception) {
+            currentUser = null;
         }
 
         return currentUser;
@@ -95,14 +91,5 @@ public class UserService {
     private org.springframework.social.facebook.api.User getProfile(String accessToken) {
         Facebook facebook = new FacebookTemplate(accessToken);
         return facebook.userOperations().getUserProfile();
-    }
-
-    /**
-     * set the current user
-     * @param currentUser current user
-     */
-    protected void setCurrentUser(User currentUser) {
-        this.currentUser = currentUser;
-        session.setAttribute("currentUser", currentUser.getId());
     }
 }
