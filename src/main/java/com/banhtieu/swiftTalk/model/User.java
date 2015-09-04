@@ -2,11 +2,22 @@ package com.banhtieu.swiftTalk.model;
 
 import org.springframework.data.annotation.Id;
 
-/**
- * Created by banhtieon 9/3/15.
- */
-public class User {
+import java.security.Principal;
 
+/**
+ * Created by banhtieu  9/3/15.
+ * The user
+ */
+public class User implements Principal {
+
+    /**
+     * Role of user
+     */
+    public enum Role {
+        USER,
+        MODERATOR,
+        ADMINISTRATOR
+    }
 
     /**
      * id of the user
@@ -30,6 +41,12 @@ public class User {
      * The facebook Id
      */
     private String facebookId;
+
+
+    /**
+     * Role of this user
+     */
+    private Role role;
 
 
     /**
@@ -87,5 +104,31 @@ public class User {
      */
     public void setFacebookId(String facebookId) {
         this.facebookId = facebookId;
+    }
+
+    /**
+     * override getName of principal
+     * @return the userId
+     */
+    @Override
+    public String getName() {
+        return id;
+    }
+
+
+    /**
+     * Get the role of this user
+     * @return
+     */
+    public Role getRole() {
+        return role;
+    }
+
+    /**
+     * Set the role of this user
+     * @param role
+     */
+    public void setRole(Role role) {
+        this.role = role;
     }
 }

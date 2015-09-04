@@ -8,10 +8,15 @@ import org.springframework.social.facebook.connect.FacebookConnectionFactory;
 
 /**
  * Created by banhtieu on 9/3/15.
+ * The facebook configuration
  */
 @Configuration
 public class FacebookConfiguration {
 
+    /**
+     * Get the facebook connection factory
+     * @return a connection factory
+     */
     @Bean
     public ConnectionFactoryLocator connectionFactoryLocator() {
         ConnectionFactoryRegistry registry = new ConnectionFactoryRegistry();

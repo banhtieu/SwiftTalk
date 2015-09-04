@@ -1,17 +1,20 @@
 package com.banhtieu.swiftTalk.services;
 
+import com.banhtieu.swiftTalk.auth.UserAuthentication;
 import com.banhtieu.swiftTalk.model.User;
+
+import java.security.Principal;
 import java.util.List;
 
 import com.banhtieu.swiftTalk.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.social.facebook.api.Facebook;
 import org.springframework.social.facebook.api.impl.FacebookTemplate;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.servlet.http.HttpSession;
 
 /**
  * Created by banhtieu on 9/3/15.
@@ -36,26 +39,33 @@ public class UserService {
 
     /**
      * Logged in as a user
-     * @param accessToken the access token of facebook session
      * @return the logged in user
      */
     @RequestMapping("/user/login")
-    public User login(@RequestParam String accessToken, HttpSession session) {
+    public User login(@RequestParam String accessToken) {
 
         org.springframework.social.facebook.api.User profile = getProfile(accessToken);
 
-        User user = userRepository.findByFacebookId(profile.getId());
+        User user = null;
 
-        if (user == null) {
-            user = new User();
-            user.setFacebookId(profile.getId());
-            user.setScreenName(profile.getName());
-            user.setAvatar(String.format("https://graph.facebook.com/%s/picture?type=large", profile.getId()));
+        if (profile != null) {
+            user = userRepository.findByFacebookId(profile.getId());
 
-            userRepository.save(user);
+
+            if (user == null) {
+                user = new User();
+                user.setFacebookId(profile.getId());
+                user.setScreenName(profile.getName());
+                user.setAvatar(String.format("https://graph.facebook.com/%s/picture?type=large", profile.getId()));
+                user.setRole(User.Role.USER);
+
+                userRepository.save(user);
+            }
+
+            UserAuthentication userAuthentication = new UserAuthentication(user);
+            SecurityContext context = SecurityContextHolder.getContext();
+            context.setAuthentication(userAuthentication);
         }
-
-        session.setAttribute("currentUser", user.getId());
 
         return user;
     }
@@ -63,24 +73,12 @@ public class UserService {
 
     /**
      * Get the current user
+     * @param principal the current user
      * @return current logged in user
      */
     @RequestMapping("/user/me")
-    public User getCurrentUser(HttpSession session) {
-
-        User currentUser = null;
-        try {
-            String userId = (String) session.getAttribute("currentUser");
-
-            if (userId != null) {
-                currentUser = userRepository.findOne(userId);
-            }
-
-        } catch (Exception exception) {
-            currentUser = null;
-        }
-
-        return currentUser;
+    public User getCurrentUser(Principal principal) {
+        return userRepository.findOne(principal.getName());
     }
 
     /**
