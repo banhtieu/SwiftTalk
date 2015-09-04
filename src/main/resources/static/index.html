@@ -1,10 +1,14 @@
-<html>
+<html ng-app="SwiftTalkApp">
 <head>
     <title>Design</title>
-    <link href='https://fonts.googleapis.com/css?family=Roboto:300' rel='stylesheet' type='text/css' />
+    <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500' rel='stylesheet' type='text/css' />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="./Styles/design.css" />
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular-resource.min.js"></script>
+    <script type="text/javascript" src="Scripts/Services.js"></script>
+    <script type="text/javascript" src="Scripts/Application.js"></script>
     <script type="text/javascript" src="Styles/design.js"></script>
 </head>
 <body>
@@ -18,6 +22,14 @@
                 </button>
             </span>
         </div>
+        <ul class="menu" ng-controller="LoginController">
+	        <li ng-if="!userService.currentUser" ng-click="userService.login()">
+	        	Login
+	        </li>
+	        <li ng-if="userService.currentUser">
+	        	{{ userService.currentUser.screenName }}
+	        </li>
+		</ul>
     </div>
     <div class="items">
         <button class="button">
@@ -25,17 +37,20 @@
         </button>
         <span class='logo'>Swift Viet</span>
     </div>
-    <ul class="menu">
-        <li>
-            <i class="fa fa-home"></i>
-            Home
-        </li>
-        <li>
-            <i class="fa fa-tag"></i>
-            Tags
-        </li>
-    </ul>
-
+    <div>
+	    <ul class="menu">
+	        <li>
+	            <a href='#'>
+		            <i class="fa fa-home"></i>
+					Home
+	            </a>
+	        </li>
+	        <li>
+	            <i class="fa fa-tag"></i>
+	            Tags
+	        </li>
+		</ul>
+    </div>
 </nav>
 <div class="layout">
     <div class="left column">

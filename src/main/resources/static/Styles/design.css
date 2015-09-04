@@ -2,8 +2,11 @@
   padding: 0px;
   margin: 0px;
   box-sizing: border-box;
-  font-family: "Roboto", Menlo, roboto;
+  font-family: "Roboto", Menlo;
   transition-timing-function: ease-in-out; }
+
+a {
+  text-decoration: none; }
 
 ::-webkit-input-placeholder {
   color: rgba(0, 0, 0, 0.25); }
@@ -22,6 +25,10 @@ body {
   background-color: #419EF7;
   color: white;
   padding: 0px; }
+  .navigation > div {
+    display: inline-block; }
+  .navigation a {
+    color: white; }
   .navigation .items {
     padding: 10px;
     display: inline-block; }
@@ -72,7 +79,8 @@ body {
     transition-duration: 0.25s;
     top: 0px;
     left: 0px;
-    bottom: 0px; }
+    bottom: 0px;
+    z-index: -1; }
   .button:active::before, .text-field:active::before, .menu li:active::before {
     width: 100%;
     background-color: rgba(0, 0, 0, 0.15); }
@@ -169,6 +177,7 @@ body {
     height: 50px;
     background: #419EF7;
     border-radius: 50%; }
+
 .post .content {
   display: table-cell; }
   .post .content .detail {
