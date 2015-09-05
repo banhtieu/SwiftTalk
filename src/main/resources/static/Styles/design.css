@@ -50,6 +50,11 @@ body {
         border: 0px; }
       .navigation .menu li:after {
         display: none; }
+  .navigation .avatar {
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    display: inline-block; }
 
 .container {
   padding: 10px; }

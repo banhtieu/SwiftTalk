@@ -13,7 +13,7 @@
 </head>
 <body>
 <nav class='navigation'>
-    <div class="pull-right">
+    <div class="pull-right" ng-controller="LoginController">
         <div class="items">
             <span class="text-field">
                 <input type="text" placeholder="Search..." />
@@ -22,14 +22,14 @@
                 </button>
             </span>
         </div>
-        <ul class="menu" ng-controller="LoginController">
+        <ul class="menu">
 	        <li ng-if="!userService.currentUser" ng-click="userService.login()">
 	        	Login
 	        </li>
-	        <li ng-if="userService.currentUser">
-	        	{{ userService.currentUser.screenName }}
-	        </li>
 		</ul>
+		<div class="items" ng-if="userService.currentUser">
+			<img ng-src="{{ userService.currentUser.avatar }}" class="avatar" />
+		</div>
     </div>
     <div class="items">
         <button class="button">
@@ -99,14 +99,6 @@
         </div>
     </div>
     <script>
-        window.fbAsyncInit = function() {
-            FB.init({
-                appId      : '470932816419704',
-                xfbml      : true,
-                version    : 'v2.4'
-            });
-        };
-
         (function(d, s, id){
             var js, fjs = d.getElementsByTagName(s)[0];
             if (d.getElementById(id)) {return;}
